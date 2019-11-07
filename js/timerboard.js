@@ -1,4 +1,4 @@
-const ScoreBoard = {
+const TimerBoard = {
     ctx: undefined,
 
     init: function (ctx) {
@@ -6,11 +6,11 @@ const ScoreBoard = {
         this.ctx.font = "30px sans-serif"
     },
 
-    update: function (score) {
+    update: function (time) {
 
 
         this.ctx.fillStyle = "white";
-        this.ctx.fillText("SCORE", 20, 50);
-        this.ctx.fillText(Math.floor(score), 200, 50);
+        this.ctx.fillText("COUNTDOWN", 525, 50);
+        this.ctx.fillText((time), 775, 50);
     }
 };

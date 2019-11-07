@@ -8,10 +8,8 @@ class Bullet {
         this.height = 30;
         this.image = new Image();
         this.image.src = 'img/alien21.png';
-        //this.playerHeight = playerH;
-        // this.vx = 50;
         this.vy = 5;
-        // this.gravity = 0.9;
+
 
     }
 

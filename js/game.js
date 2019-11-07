@@ -2,17 +2,19 @@ const game = {
     canvas: undefined,
     ctx: undefined,
     width: undefined,
-    heigth: undefined,
+    height: undefined,
     fps: 60,
     framesCounter: 0,
     obstacles: [],
     alienCoin: [],
+    coinEsmeralda: [],
     keys: {
         ARROW_LEFT: 37,
         ARROW_RIGHT: 39,
         SHOOTING: 32,
     },
-    score: 0,
+    //time: 500,
+    // score: 0,
 
 
 
@@ -27,34 +29,36 @@ const game = {
 
     },
 
-    // setDimensions() {
-    // document.getElementsByTagName("body")[0].style.margin = 0;
-    //     this.wWidth = window.innerWidth;
-    //     this.wHeight = window.innerHeight;
-    //     this.canvasDom.setAttribute("height", this.wHeight);
-    //     this.canvasDom.setAttribute("width", this.wWidth / 3);
-    // },
+
 
 
 
     start() {
         this.reset()
+
         this.interval = setInterval(() => {
+            this.time--
             this.framesCounter++;
             if (this.framesCounter > 1000) this.framesCounter = 0;
             this.clear()
             this.generateObstacles();
             this.generateAlienCoin();
+            this.generateCoinEsmeralda();
             this.drawAll();
             this.moveAll();
-            this.isColision2()
+            this.isColision1();
+            this.isColision2();
             this.isColision3();
+            this.isColision4();
             if (this.isColision()) {
                 this.gameOver();
-
             };
+            if (this.time === 0) {
+                this.gameOver()
+            }
             this.clearObstacles();
             this.clearAlienCoin();
+            this.clearCoinEsmeralda();
 
 
         }, 1000 / this.fps);
@@ -66,15 +70,21 @@ const game = {
         this.scoreboard = ScoreBoard;
         this.scoreboard.init(this.ctx);
         this.score = 0;
+        this.timer = TimerBoard;
+        this.timer.init(this.ctx);
+        this.time = 2812;
         this.obstacles = [];
         this.alienCoin = [];
+        this.coinEsmeralda = [];
     },
     drawAll() {
         this.background.draw();
         this.AIplayer.draw();
         this.drawScore();
+        this.drawTimer()
         this.obstacles.forEach(obs => obs.draw());
         this.alienCoin.forEach(coin => coin.draw());
+        this.coinEsmeralda.forEach(coin => coin.draw());
 
 
     },
@@ -85,8 +95,9 @@ const game = {
         this.background.move();
         this.obstacles.forEach(obs => obs.move());
         this.alienCoin.forEach(coin => coin.move());
-        // this.aliensBolt.move();
-        // this.AIplayer.move();
+        this.coinEsmeralda.forEach(coin => coin.move());
+
+
 
     },
     clear() {
@@ -113,22 +124,35 @@ const game = {
     generateAlienCoin() {
         let random = Math.floor(Math.random() * this.canvas.width);
         if (this.framesCounter % 200 == 0) {
-
             this.alienCoin.push(new alienCoin(this.ctx, random, 0)) //pusheamos nuevos alienCoin
         }
 
     },
     clearAlienCoin() {
         this.alienCoin.forEach((coin, idx) => {
-
             if (coin.posY <= this.heigth) {
                 this.alienCoin.splice(idx, 1);
             }
-            console.log(idx)
+        });
+    },
+    generateCoinEsmeralda() {
+        let random = Math.floor(Math.random() * this.canvas.width);
+        if (this.framesCounter % 300 == 0) {
+            this.coinEsmeralda.push(new coinEsmeralda(this.ctx, random, 0)) //pusheamos nuevos coinElmeralda
+        }
+
+    },
+    clearCoinEsmeralda() {
+        this.coinEsmeralda.forEach((coin, idx) => {
+
+            if (coin.posY <= this.heigth) {
+                this.coinEsmeralda.splice(idx, 1);
+            }
+
         });
     },
 
-    isColision() {
+    isColision() { // colision con el player
 
         return this.obstacles.some(
             obs => {
@@ -143,10 +167,23 @@ const game = {
             })
     },
 
+    isColision1() { //Colision de las naves con el limite de la pantalla inferior
+
+        return this.obstacles.some(
+            obs => {
+
+                if (
+                    this.height <= obs.posY + obs.height
+                ) {
+                    this.gameOver()
+                }
+            })
+    },
 
 
 
-    isColision2() {
+
+    isColision2() { // Colision de las obstacles  con el player
 
         for (let i = 0; i < this.obstacles.length; i++) {
             for (let j = 0; j < this.AIplayer.bullets.length; j++) {
@@ -155,16 +192,18 @@ const game = {
                     this.obstacles[i].posX + this.obstacles[i].width >= this.AIplayer.bullets[j].posX &&
                     this.obstacles[i].posX <= this.AIplayer.bullets[j].posX + this.AIplayer.bullets[j].width &&
                     this.obstacles[i].posY <= this.AIplayer.bullets[j].posY + this.AIplayer.bullets[j].height //Encima Bullet-debajo obstacles
-                )
+                ) {
                     this.obstacles.splice(i, 1);
+                    this.coinShip();
+                }
 
             }
         }
     },
-    isColision3() {
+    isColision3() { // Colision de las monedas doradas  con el player
 
         for (let i = 0; i < this.alienCoin.length; i++) {
-            //for (let j = 0; j < this.AIplayer.bullets.length; j++) {
+
             if (
                 this.alienCoin[i].posY + this.alienCoin[i].height >= this.AIplayer.posY &&
                 this.alienCoin[i].posX + this.alienCoin[i].width >= this.AIplayer.posX &&
@@ -172,22 +211,72 @@ const game = {
                 this.alienCoin[i].posY <= this.AIplayer.posY + this.AIplayer.height
             )
 
+            {
                 this.alienCoin.splice(i, 1);
-            this.coinScore()
+                this.coinScore()
+            }
 
         }
     },
 
-    drawScore() {
-        //con esta funcion pintamos el marcador
+    isColision4() {
+
+        for (let i = 0; i < this.coinEsmeralda.length; i++) {
+
+            if (
+                this.coinEsmeralda[i].posY + this.coinEsmeralda[i].height >= this.AIplayer.posY &&
+                this.coinEsmeralda[i].posX + this.coinEsmeralda[i].width >= this.AIplayer.posX &&
+                this.coinEsmeralda[i].posX <= this.AIplayer.posX + this.AIplayer.width &&
+                this.coinEsmeralda[i].posY <= this.AIplayer.posY + this.AIplayer.height
+            )
+
+            {
+
+                this.coinEsmeralda.splice(i, 1);
+                this.coinEsm()
+            }
+
+        }
+    },
+
+    drawScore() { // reflejamos el marcador en pantalla
         this.scoreboard.update(this.score);
 
     },
-    coinScore() {
-        this.score++
+    drawTimer() { // reflejamos el marcador en pantalla
+        this.timer.update(this.time);
     },
+
+    coinShip() {
+        this.score += 5
+    },
+    coinScore() {
+        this.score += 10
+    },
+    coinEsm() {
+        this.score += 25
+    },
+
+    // timer() {
+    //     time = 45;
+    //     this.ctx.font = "30px sans-serif"
+    //     this.ctx.fillStyle = "white";
+    //     this.ctx.fillText((time), 250, 50);
+    //     console.log("ESTAMOS AQUI, YAY!!!!")
+
+    //     this.interval = setInterval(function () {
+    //         time--;
+    //         if (time < 0)
+    //             this.gameOver();
+    //     }, 1000)
+    // },
+
+
     gameOver() {
         clearInterval(this.interval);
+        this.ctx.font = "100px sans-serif"
+        this.ctx.fillStyle = "white";
+        this.ctx.fillText(("GAME OVER"), this.width / 6.5, this.height / 2);
 
     }
 }

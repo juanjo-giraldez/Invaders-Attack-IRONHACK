@@ -10,7 +10,7 @@ class AIplayer {
         this.posX = width / 2;
         this.posY = height * 0.90;
 
-        this.vx = 20;
+        this.vx = 50;
         this.keys = keys;
         this.bullets = [];
         this.setListeners();
@@ -30,7 +30,6 @@ class AIplayer {
 
     setListeners() {
         document.onkeydown = e => {
-            console.log("hola, holita")
             switch (e.keyCode) {
                 case this.keys.ARROW_LEFT:
                     // this.posX = this.width ? this.posX -= this.vx : null;
