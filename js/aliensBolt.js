@@ -8,7 +8,7 @@ class Bullet {
         this.height = 30;
         this.image = new Image();
         this.image.src = 'img/alien21.png';
-        this.vy = 5;
+        this.vy = 4;
 
 
     }

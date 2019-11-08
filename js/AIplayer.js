@@ -7,14 +7,14 @@ class AIplayer {
         this.image = new Image();
         this.image.src = "img/alienInvaders1.png";
 
-        this.posX = width / 2;
+        this.posX = 390; //width / 2;
         this.posY = height * 0.90;
 
         this.vx = 50;
         this.keys = keys;
         this.bullets = [];
-        this.setListeners();
 
+        this.setListeners();
     }
 
     draw() {
@@ -32,11 +32,14 @@ class AIplayer {
         document.onkeydown = e => {
             switch (e.keyCode) {
                 case this.keys.ARROW_LEFT:
+                    this.posX >= 35 ? this.posX -= this.vx : null
+                    //  if (this.posX >= 0) this.posX -= this.vx
                     // this.posX = this.width ? this.posX -= this.vx : null;
-                    this.posX -= this.vx;
+                    // this.posX -= this.vx;
                     break;
                 case this.keys.ARROW_RIGHT:
-                    this.posX += this.vx;
+                    this.posX <= 781 ? this.posX += this.vx : null
+                    // this.posX += this.vx;
                     break;
                 case this.keys.SHOOTING:
                     this.shoot();
@@ -46,22 +49,29 @@ class AIplayer {
     }
 
     shoot() {
-
         this.bullets.push(new Bullet(this.ctx, this.posX, this.posY, this.width, this.height));
+        let bulletsSound = document.createElement("audio")
+        bulletsSound.src = "audio/NFF-laser-gun-02.wav"
+        bulletsSound.volume = .04
+        bulletsSound.play()
     }
 
-    isCollision() {
+    // isCollision() {
 
-        return this.bullets.some(
-            obs => {
-                // console.log(obs)
-                return (
-                    this.shipObstacles.posY + this.shipObstacles.height <= obs.posY //&& //Arriba
-                    // this.shipObstacles.posX <= obs.posX + obs.width && //su izquierda(AIplayer)
-                    // this.shipObstacles.posX + this.shipObstacles.width >= obs.posX // su derecha
-                )
+    //     return this.bullets.some(
+    //         obs => {
+    //             console.log(obs)
+    //             if (
+    //                 this.shipObstacles.posY + this.shipObstacles.height <= obs.posY //&& //Arriba
+    //                 // this.shipObstacles.posX <= obs.posX + obs.width && //su izquierda(AIplayer)
+    //                 // this.shipObstacles.posX + this.shipObstacles.width >= obs.posX // su derecha
+    //             ) {
 
-            })
-    }
+    //                 console.log(YAY)
+    //                 this.bullets.splice(i, 1);
+    //             }
+
+    //         })
+    // }
 
 }

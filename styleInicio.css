@@ -1,21 +1,28 @@
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
 
-* {
-    margin: 50;
-    padding: 0;
-}
-
 body {
-    /* padding: 0;
-    text-align: center; */
     font-family: 'Press Start 2P',
         cursive;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    text-align: center;
     background-image: url("img/salonArcade.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     color: greenyellow;
-    /* display: flex;
-    justify-content: center; */
+}
+
+
+.title {
+    margin: 100px
+}
+
+.two {
+
+    margin: 50px
 }
 
 .press {
@@ -26,13 +33,5 @@ body {
     border: 0;
     box-shadow: 0;
 
-    margin: 100px 0;
-}
-
-.move {
-    margin: 200px 0
-}
-
-.margin {
-    margin-bottom: 50px
+    margin-bottom: 30px;
 }

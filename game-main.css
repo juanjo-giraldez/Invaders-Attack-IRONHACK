@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P',
+        cursive;
+    background-image: url("img/salonArcade.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+
+}
+
+canvas {
+
+    display: block;
+    margin: 0 auto;
+
+    /* display: flex;
+    justify-content: center */
+}
+
+/* canvas {
+    padding: 0;
+    margin-left: 300px;
+    display: block;
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+} */
