@@ -13,21 +13,29 @@ body {
 canvas {
 
     display: block;
-    margin: 0 auto;
+    margin: 1 auto;
 
-    /* display: flex;
-    justify-content: center */
+    
+}
+div {
+    display: flex;
+    justify-content: space-around
 }
 
-/* canvas {
-    padding: 0;
-    margin-left: 300px;
-    display: block;
-    width: 800px;
-    height: 600px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-} */
+.center {
+    align-items: center
+}
+.centerTwo {
+    flex-direction: column
+}
+.press {
+    font-size: 20px;
+    text-decoration-line: none;
+    background-color: #870007;
+    color: greenyellow;
+    padding: 10px 20px;
+    border: 0;
+    box-shadow: 0;
+    margin: 100px 0;
+}
+

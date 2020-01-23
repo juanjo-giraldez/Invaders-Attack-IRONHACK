@@ -11,7 +11,7 @@ class coinEsmeralda {
 
 
 
-        this.vx = 1; // 0.2;
+        this.vx = 1; 
     }
 
     draw() {

@@ -14,11 +14,11 @@ class Bullet {
     }
 
     draw() {
-        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height); // 30, 20);
+        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height); 
     }
 
     move() {
-        // this.posX += this.vx;
+        
         this.posY -= this.vy;
 
 

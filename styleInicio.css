@@ -27,11 +27,11 @@ body {
 
 .press {
     font-size: 20px;
+    text-decoration-line: none;
     background-color: #870007;
     color: greenyellow;
     padding: 10px 20px;
     border: 0;
     box-shadow: 0;
-
     margin-bottom: 30px;
 }

@@ -9,10 +9,9 @@ class alienCoin {
         this.height = 30
 
 
-        // this.posX = width / 2;
-        // this.posY = this.height * 0.02;
+     
 
-        this.vx = 3; // 0.2;
+        this.vx = 3; 
     }
 
     draw() {

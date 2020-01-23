@@ -7,7 +7,7 @@ class shipObstacles {
         this.image.src = "img/ship.png";
         this.width = 30
         this.height = 50
-        this.vx = 2; // 0.5;
+        this.vx = 2; 
     }
 
     draw() {

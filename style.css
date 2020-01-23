@@ -6,20 +6,19 @@
 }
 
 body {
-    /* padding: 0;
-    text-align: center; */
+    
     font-family: 'Press Start 2P',
         cursive;
     background-image: url("img/salonArcade.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     color: greenyellow;
-    /* display: flex;
-    justify-content: center; */
+    
 }
 
 .press {
     font-size: 20px;
+    text-decoration-line: none;
     background-color: #870007;
     color: greenyellow;
     padding: 10px 20px;
